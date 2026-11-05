@@ -11,7 +11,7 @@ export const getStorageData = (key, fallback = null) => {
 
 export const setStorageData = (key, value) => {
     try{
-        localstorage.setItem(key, JSON.stringify(value));
+        localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
         console.error("Error saving to localStorage:", error);
     }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { initialAssignments } from "../data/assignments";
+import { useAssignments } from "../context/AssignmentContext";
 import { useAuth } from "../context/AuthContext";
 import { getStorageData, setStorageData } from "../utils/storage";
 import {
@@ -13,13 +13,15 @@ import {
 function StudentDashboard() {
   const { currentUser, logout } = useAuth();
 
+  const { assignments } = useAssignments();
+
   const [submissions, setSubmissions] = useState(() =>
     getStorageData("submissions", [])
   );
 
   const [selectedAssignment, setSelectedAssignment] = useState(null);
 
-  const studentAssignments = initialAssignments.filter(
+  const studentAssignments = assignments.filter(
     (assignment) =>
       assignment.assignedTo.includes("all") ||
       assignment.assignedTo.includes(currentUser.id)

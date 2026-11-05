@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { users } from "../data/users";
@@ -12,16 +12,19 @@ const Login = () => {
   const { login, isAuthenticated, currentUser } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect an already logged-in user
+  useEffect(() => {
   if (isAuthenticated) {
-    return (
-      <div>
-        {navigate(
-          currentUser.role === "admin" ? "/admin" : "/student"
-        )}
-      </div>
+    navigate(
+      currentUser.role === "admin" ? "/admin" : "/student",
+      { replace: true }
     );
   }
+}, [isAuthenticated, currentUser, navigate]);
+
+  // Redirect an already logged-in user
+  if (isAuthenticated) {
+  return null;
+}
 
   const handleSubmit = (e) => {
     e.preventDefault();
